@@ -20,7 +20,7 @@ switch (action) {
 
     case "movie-this":
         var movie = process.argv[3]
-        movie();
+        movieThis();
         break;
 
     case "do-what-it-says":
@@ -103,7 +103,7 @@ function spotifyThis() {
     });
 }
 
-function movie() {
+function movieThis() {
     if (movie === undefined) {
         movie = "mr nobody";
     }
