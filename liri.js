@@ -6,7 +6,7 @@ var fs = require('fs');
 var spotify = new Spotify(keys.spotify);
 var action = process.argv[2];
 
-function start() {
+
 
     switch (action) {
 
@@ -28,12 +28,16 @@ function start() {
 
         case "spotify-this-song":
             var song = process.argv[3];
+            if (song === undefined){
+                song = "the sign ace of base";
+            }
 
             spotify.search({ type: 'track', query: song, limit: 5 }, function (err, data) {
                 if (err) {
                     return console.log('Error occurred: ' + err);
                 };
 
+                
                 for (var i = 0; i < data.tracks.items.length; i++) {
                     console.log("Artist: " + data.tracks.items[i].artists[0].name);
                     console.log("Song Name: " + data.tracks.items[i].name);
@@ -46,14 +50,15 @@ function start() {
             break;
         case "movie-this":
             var movie = process.argv[3]
+            if (movie === undefined){
+                movie = "mr nobody";
+            }
             var axios = require('axios');
             var url = `http://www.omdbapi.com/?apikey=trilogy&t=${movie}`
 
-
             axios.get(url).then(function (result) {
-                if (movie === undefined) {
-                    console.log("Try again with a movie title.")
-                } else {
+              
+                
                     console.log("Title: " + result.data.Title);
                     console.log("Year Released: " + result.data.Year);
                     console.log("IMDB Rating: " + result.data.Ratings[0].Value);
@@ -62,8 +67,6 @@ function start() {
                     console.log("Language: " + result.data.Language);
                     console.log("Plot: " + result.data.Plot);
                     console.log("Actors: " + result.data.Actors);
-                }
-
             })
             break;
         case "do-what-it-says":
@@ -75,6 +78,3 @@ function start() {
             })
             break;
     }
-
-
-start();
